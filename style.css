@@ -1,0 +1,42 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+}
+.cell {
+    padding: 50px;
+    border: 1px solid black;
+}
+.board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+}
+
+#one, #four, #seven {
+    border-left: none;
+}
+#three, #six, #nine {
+    border-right: none;
+}
+#two, #one, #three {
+    border-top: none;
+}
+
+#seven, #eight, #nine {
+    border-bottom: none;
+}
+
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
