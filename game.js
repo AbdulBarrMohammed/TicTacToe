@@ -1,5 +1,17 @@
+
+// screen tic tac toe board
 const ticBoard = document.querySelector('.board');
 const boardCells = ticBoard.querySelectorAll('div');
+
+const turnText = document.querySelector('.turn');
+const restartButton = document.querySelector('button');
+
+const sleep = async (milliseconds) => {
+    await new Promise(resolve => {
+        return setTimeout(resolve, milliseconds);
+    })
+}
+
 let playerTurn = 'X';
 const arrayBoard = [
     ['','',''],
@@ -12,12 +24,6 @@ function clearScreenBoard(boardCell) {
         div.innerHTML = '';
     });
 }
-function Player (name, letter) {
-    const playerName = name;
-    const playerLetter = letter;
-    return {playerName, playerLetter}
-}
-
 function getIndexes(cell) {
     if (cell === 'one') {
         return [0,0];
@@ -48,11 +54,18 @@ function getIndexes(cell) {
     }
 
 }
-ticBoard.addEventListener("click", function(e) {
-    //console.log(e.target.id);
 
-    const boardGame = GameBoard(arrayBoard);
+const boardGame = GameBoard(arrayBoard);
+restartButton.addEventListener('click', function(e) {
+    clearScreenBoard(boardCells);
+    boardGame.clearBoard();
+    playerTurn = 'X';
+    turnText.textContent = "It's players X's turn";
 
+
+});
+
+ticBoard.addEventListener("click", async function(e) {
     const cellPlaced = e.target.id;
     const currentIndex = getIndexes(cellPlaced);
     const indexOne = currentIndex[0];
@@ -62,18 +75,18 @@ ticBoard.addEventListener("click", function(e) {
         e.target.innerHTML = playerTurn;
 
         if (boardGame.checkWinner('X')) {
-
-            alert('X won');
-            clearScreenBoard(boardCells);
-            boardGame.clearBoard();
-            console.log(arrayBoard);
+            await sleep(100);
+            turnText.textContent = 'X WON !!!';
+            playerTurn = '';
+            return;
 
         }
 
         if (boardGame.checkWinner('O')) {
-            alert('0 won');
-            clearScreenBoard(boardCells);
-            boardGame.clearBoard();
+            await sleep(100);
+            turnText.textContent = '0 WON !!!';
+            playerTurn = '';
+            return;
         }
 
         if (playerTurn == 'X') {
@@ -82,12 +95,11 @@ ticBoard.addEventListener("click", function(e) {
         else {
             playerTurn = 'X';
         }
+        turnText.textContent = `It's player ${playerTurn}'s turn`;
     }
     else {
-        alert('space taken');
+        console.log('space already taken');
     }
-
-
     console.log(arrayBoard);
 
 
